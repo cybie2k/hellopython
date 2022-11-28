@@ -31,11 +31,11 @@ support_dataframe=pd.read_excel(support_data_file)
 #print(support_dataframe.to_string())
 
 
-def dayofweekoffset(d):
+""" def dayofweekoffset(d):
     if (d<6) :
         return (d+1)*-1
     else:
-        return 0
+        return 0 """
 
 frames=[]
 for timelogfile in timelogfiles:
@@ -49,9 +49,8 @@ TimeLogData=pd.concat(frames)
 TimeLogData["Event Duration"]=(TimeLogData["Clock Out"]-TimeLogData["Clock In"])/pd.Timedelta(hours=1)
 TimeLogData["Work Day"]=pd.to_datetime(TimeLogData['Clock In']-pd.Timedelta(hours=7)).dt.date
 TimeLogData["Work Day of Week"]=pd.to_datetime(TimeLogData["Work Day"]).dt.day_of_week
-TimeLogData["Temp"]=np.where(TimeLogData["Work Day of Week"]==6,0,(TimeLogData["Work Day of Week"]+1)*-1)
-
-    
+TimeLogData["Temp"]=np.where(TimeLogData["Work Day of Week"]==6,0,(TimeLogData["Work Day of Week"]+1)*-1).astype(int)
+TimeLogData["Work Week"]=(TimeLogData["Work Day"] - pd.to_datetime(TimeLogData["Work Day"]).dt.weekday * np.timedelta64(1,'D'))-pd.Timedelta(days=1)
 ##logging.debug(frames)
 
 logging.debug(TimeLogData)
