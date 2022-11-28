@@ -3,9 +3,10 @@ from openpyxl import Workbook, load_workbook
 import os
 from datetime import timedelta,datetime
 import logging
-##logging.basicConfig(filename='log.txt', level=logging.INFO)
+
 logging.basicConfig(level=logging.WARN)
 pp=pprint.PrettyPrinter(indent=4)
+
 origcurdir=os.curdir
 timelogdir=os.path.join(os.getcwd(),'Time Tracker','timelog')
 timelogfile=os.path.join(timelogdir,'TimeLog.xlsx')
